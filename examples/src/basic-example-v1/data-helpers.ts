@@ -1,6 +1,6 @@
 // const moment = require('moment');
 import {DateTime} from "luxon";
-import {declareType, TypedData} from "../../types";
+import {declareType, TypedData} from "../../../src/types";
 import {Ydb} from "../../../proto/bundle";
 
 import Type = Ydb.Type;

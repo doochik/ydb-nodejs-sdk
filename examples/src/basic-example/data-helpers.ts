@@ -1,5 +1,5 @@
 // const moment = require('moment');
-const {declareType, TypedData} = require('../../types');
+const {declareType, TypedData} = require('../../../src/types');
 import {Ydb} from "../../../proto/bundle";
 
 import Type = Ydb.Type;
