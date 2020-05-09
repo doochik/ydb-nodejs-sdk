@@ -39,7 +39,10 @@ export abstract class GrpcService<Api extends $protobuf.rpc.Service> {
     protected getClient(host: string, sslCredentials?: ISslCredentials): Api {
         const client = sslCredentials ?
             new grpc.Client(host, grpc.credentials.createSsl()) :
-            new grpc.Client(host, grpc.credentials.createInsecure());
+            new grpc.Client(host, grpc.credentials.createInsecure(), {
+                "grpc.max_receive_message_length": 1024 * 1024 * 100,
+                "grpc.max_send_message_length": 1024 * 1024 * 100
+            });
         const rpcImpl: $protobuf.RPCImpl = (method, requestData, callback) => {
             const path = `/${this.name}/${method.name}`;
             client.makeUnaryRequest(path, _.identity, _.identity, requestData, null, null, callback);
@@ -85,7 +88,10 @@ export abstract class BaseService<Api extends $protobuf.rpc.Service> {
     protected getClient(host: string, sslCredentials?: ISslCredentials): Api {
         const client = sslCredentials ?
             new grpc.Client(host, grpc.credentials.createSsl(sslCredentials.rootCertificates)) :
-            new grpc.Client(host, grpc.credentials.createInsecure());
+            new grpc.Client(host, grpc.credentials.createInsecure(), {
+                "grpc.max_receive_message_length": 1024 * 1024 * 100,
+                "grpc.max_send_message_length": 1024 * 1024 * 100
+            });
         const rpcImpl: $protobuf.RPCImpl = (method, requestData, callback) => {
             const path = `/${this.name}/${method.name}`;
             client.makeUnaryRequest(path, _.identity, _.identity, requestData, this.metadata, null, callback);
