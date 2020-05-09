@@ -21,7 +21,10 @@ class GrpcService {
     getClient(host, sslCredentials) {
         const client = sslCredentials ?
             new grpc_1.default.Client(host, grpc_1.default.credentials.createSsl()) :
-            new grpc_1.default.Client(host, grpc_1.default.credentials.createInsecure());
+            new grpc_1.default.Client(host, grpc_1.default.credentials.createInsecure(), {
+                "grpc.max_receive_message_length": 1024 * 1024 * 100,
+                "grpc.max_send_message_length": 1024 * 1024 * 100
+            });
         const rpcImpl = (method, requestData, callback) => {
             const path = `/${this.name}/${method.name}`;
             client.makeUnaryRequest(path, lodash_1.default.identity, lodash_1.default.identity, requestData, null, null, callback);
@@ -56,7 +59,10 @@ class BaseService {
     getClient(host, sslCredentials) {
         const client = sslCredentials ?
             new grpc_1.default.Client(host, grpc_1.default.credentials.createSsl(sslCredentials.rootCertificates)) :
-            new grpc_1.default.Client(host, grpc_1.default.credentials.createInsecure());
+            new grpc_1.default.Client(host, grpc_1.default.credentials.createInsecure(), {
+                "grpc.max_receive_message_length": 1024 * 1024 * 100,
+                "grpc.max_send_message_length": 1024 * 1024 * 100
+            });
         const rpcImpl = (method, requestData, callback) => {
             const path = `/${this.name}/${method.name}`;
             client.makeUnaryRequest(path, lodash_1.default.identity, lodash_1.default.identity, requestData, this.metadata, null, callback);
