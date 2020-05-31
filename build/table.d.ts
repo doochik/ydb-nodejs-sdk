@@ -56,7 +56,7 @@ export declare class Session extends EventEmitter implements ICreateSessionResul
     commitTransaction(txControl: IExistingTransaction): Promise<void>;
     rollbackTransaction(txControl: IExistingTransaction): Promise<void>;
     prepareQuery(queryText: string): Promise<PrepareQueryResult>;
-    executeQuery(query: PrepareQueryResult | string, params?: IQueryParams, txControl?: IExistingTransaction | INewTransaction): Promise<ExecuteQueryResult>;
+    executeQuery(query: PrepareQueryResult | string, params?: IQueryParams, txControl?: IExistingTransaction | INewTransaction, operationParams?: Ydb.Operations.IOperationParams): Promise<ExecuteQueryResult>;
 }
 export declare class SessionPool extends EventEmitter {
     private driver;

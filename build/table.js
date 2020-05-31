@@ -159,7 +159,7 @@ let Session = /** @class */ (() => {
             const payload = utils_1.getOperationPayload(response);
             return PrepareQueryResult.decode(payload);
         }
-        async executeQuery(query, params = {}, txControl = AUTO_TX) {
+        async executeQuery(query, params = {}, txControl = AUTO_TX, operationParams) {
             this.logger.trace('preparedQuery', JSON.stringify(query, null, 2));
             this.logger.trace('parameters', JSON.stringify(params, null, 2));
             let queryToExecute;
@@ -177,7 +177,8 @@ let Session = /** @class */ (() => {
                 sessionId: this.sessionId,
                 txControl,
                 parameters: params,
-                query: queryToExecute
+                query: queryToExecute,
+                operationParams: operationParams,
             };
             const response = await this.api.executeDataQuery(request);
             const payload = utils_1.getOperationPayload(response);
