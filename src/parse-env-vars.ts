@@ -65,6 +65,6 @@ export function getCredentialsFromEnv(entryPoint: string, dbName: string, logger
         return new IamAuthService(getSACredentialsFromJson(process.env.SA_JSON_FILE), dbName, sslCredentials);
     } else {
         logger.debug('Neither YDB_TOKEN nor SA_ID env variable is set, getting token from Metadata Service');
-        return new MetadataAuthService(dbName, sslCredentials);
+        return new MetadataAuthService(dbName, undefined, sslCredentials);
     }
 }
